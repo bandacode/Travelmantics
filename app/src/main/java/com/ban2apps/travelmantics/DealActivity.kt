@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_deal.*
 class DealActivity : AppCompatActivity() {
 
     private lateinit var mDeal: TravelDeal
+    private var isAdmin = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,31 +22,16 @@ class DealActivity : AppCompatActivity() {
             txtDescription.setText(deal.description)
             txtPrice.setText(deal.price)
             mDeal = deal
+            isAdmin = getAdmin()
+            invalidateOptionsMenu()
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_deal, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
-            R.id.action_save -> {
-                saveDeal()
-                Toast.makeText(this, "Deal Saved", Toast.LENGTH_LONG).show()
-                clean()
-                finish()
-                true
-            }
-            R.id.action_delete -> {
-                deleteDeal()
-                Toast.makeText(this, "Deal Deleted", Toast.LENGTH_LONG).show()
-                finish()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+    private fun getAdmin(): Boolean {
+        val pref = getSharedPreferences("prefs", 0)
+        val enabler = pref.getBoolean("user_id", false)
+        enableEditTexts(enabler)
+        return enabler
     }
 
     private fun clean() {
@@ -67,5 +53,37 @@ class DealActivity : AppCompatActivity() {
             return
         }
         FirebaseUtil().delete(mDeal)
+    }
+
+    private fun enableEditTexts(isEnabled: Boolean) {
+        txtDescription.isEnabled = isEnabled
+        txtPrice.isEnabled = isEnabled
+        txtTitle.isEnabled = isEnabled
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_deal, menu)
+        menu?.findItem(R.id.action_save)?.isVisible = isAdmin
+        menu?.findItem(R.id.action_delete)?.isVisible = isAdmin
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.action_save -> {
+                saveDeal()
+                Toast.makeText(this, "Deal Saved", Toast.LENGTH_LONG).show()
+                clean()
+                finish()
+                true
+            }
+            R.id.action_delete -> {
+                deleteDeal()
+                Toast.makeText(this, "Deal Deleted", Toast.LENGTH_LONG).show()
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
