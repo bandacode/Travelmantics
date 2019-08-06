@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_deal.view.*
 
-class DealAdapter(private val listener: (TravelDeal) -> Unit)
-    : RecyclerView.Adapter<DealAdapter.ViewHolder>() {
+class DealAdapter(private val listener: (TravelDeal) -> Unit) :
+    RecyclerView.Adapter<DealAdapter.ViewHolder>() {
 
     companion object {
         private val TAG = DealAdapter::class.java.simpleName
@@ -58,6 +59,8 @@ class DealAdapter(private val listener: (TravelDeal) -> Unit)
             tvDescription.text = deal.description
             val price = "K${deal.price}"
             tvPrice.text = price
+            Picasso.get().load(deal.imageUrl)
+                .into(image)
             setOnClickListener { listener(deal) }
         }
     }

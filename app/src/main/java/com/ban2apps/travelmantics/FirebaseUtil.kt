@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.core.content.edit
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 class FirebaseUtil {
 
@@ -15,6 +16,8 @@ class FirebaseUtil {
 
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
+    private val storage = FirebaseStorage.getInstance()
+    val storageRef = storage.reference.child("deals_pics")
 
     fun add(deal: TravelDeal) {
         if (deal.id == "")
@@ -67,6 +70,13 @@ class FirebaseUtil {
             .delete()
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
             .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+        if (!deal.imageName.isNullOrEmpty()) {
+            val storageRef = storage.reference
+            val desertRef = storageRef.child(deal.imageName!!)
+            desertRef.delete().addOnSuccessListener {
+                Log.d(TAG, "Image file successfully deleted!")
+            }.addOnFailureListener { e -> Log.w(TAG, "Error deleting file", e) }
+        }
     }
 
     fun attachListener(authListener: FirebaseAuth.AuthStateListener) {

@@ -7,6 +7,7 @@ data class TravelDeal(
         var price: String,
         var description: String,
         var id: String = "",
-        var imageUrl: String? = null) : Serializable {
+        var imageUrl: String? = null,
+        var imageName: String? = null) : Serializable {
     constructor():this("", "", "")
 }
