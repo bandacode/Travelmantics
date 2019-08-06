@@ -4,4 +4,7 @@
     <string name="hint_price">Price</string>
     <string name="hint_description">Description</string>
     <string name="menu_save">Save</string>
+    <string name="deal_image">deal image</string>
+    <string name="new_travel_deal">New Travel Deal</string>
+    <string name="delete_deal">Delete Deal</string>
 </resources>

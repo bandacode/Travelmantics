@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InsertActivity">
+    android:background="@color/colorPrimaryLight"
+    tools:context=".DealActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textTitle"
@@ -23,7 +24,8 @@
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences"/>
+            android:inputType="textCapSentences"
+            android:textColorHint="@android:color/white"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,7 +46,8 @@
             android:id="@+id/txtPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal"
+            android:textColorHint="@android:color/white"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,7 +68,8 @@
             android:id="@+id/txtDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences"/>
+            android:inputType="textCapSentences"
+            android:textColorHint="@android:color/white"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
